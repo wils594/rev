@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8" />
+    <title>Fiche de {{ $femme->prenom }} {{ $femme->nom }}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+
+    <style>
+        body {
+            background-color: #f2f4f8;
+            padding: 2rem;
+        }
+        .card {
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            max-width: 600px;
+            margin: auto;
+        }
+        .qr-img {
+            max-width: 180px;
+            margin-bottom: 1.5rem;
+        }
+        .photo-img {
+            max-width: 180px;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+            margin-bottom: 1.5rem;
+        }
+        ul.list-group li.list-group-item strong {
+            width: 130px;
+            display: inline-block;
+        }
+        .status {
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="card p-4 mt-5">
+        <h3 class="text-center mb-4">Fiche d'identité</h3>
+
+        <!-- QR Code -->
+        <div class="text-center mb-4">
+            @if($femme->qr_code_path)
+                <img src="{{ asset('storage/' . $femme->qr_code_path) }}" class="qr-img" alt="QR Code de {{ $femme->prenom }}" />
+            @endif
+        </div>
+
+        <!-- Photo -->
+        <div class="text-center mb-4">
+            @if($femme->photo)
+                <img src="{{ asset('storage/photos/' . $femme->photo) }}" alt="Photo de {{ $femme->prenom }}" class="photo-img" />
+            @else
+                <p class="text-muted fst-italic">Pas de photo disponible</p>
+            @endif
+        </div>
+
+        <!-- Infos -->
+        <ul class="list-group list-group-flush mb-4">
+            <li class="list-group-item"><strong>Nom :</strong> {{ $femme->nom }}</li>
+            <li class="list-group-item"><strong>Prénom :</strong> {{ $femme->prenom }}</li>
+            <li class="list-group-item"><strong>Activité :</strong> {{ $femme->activite }}</li>
+            <li class="list-group-item"><strong>Téléphone :</strong> {{ $femme->telephone }}</li>
+            <li class="list-group-item">
+                <strong>Statut paiement :</strong>
+                @if($femme->statut_paiement === 'à jour')
+                    <span class="badge bg-success">À jour</span>
+                @else
+                    <span class="badge bg-danger">Non payé</span>
+                @endif
+            </li>
+        </ul>
+
+        <!-- **Pas de boutons d'action ici** -->
+
+    </div>
+</body>
+</html>
